@@ -1,0 +1,23 @@
+name = "Condor"
+uuid = "ce3e846d-a250-429b-81e6-e6cf6b410658"
+authors = ["Yusuke Takase <takase_y@s.okayama-u.ac.jp>"]
+version = "0.1.0"
+
+[deps]
+HDF5 = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
+Healpix = "9f4e344d-96bc-545a-84a3-ae6b9e1b672b"
+Interpolations = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+ProgressMeter = "92933f4c-e287-5a05-a399-4b506db050ca"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
+ReferenceFrameRotations = "74f56ac7-18b3-5285-802d-d4bd4f104033"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+
+[compat]
+julia = "1.6"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
