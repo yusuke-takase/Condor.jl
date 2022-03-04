@@ -20,7 +20,7 @@ function make_beam_TQU(beam_map, NPIX, res)
     for i in 1:NPIX
         ang = pix2angRing(res, i)
         map_TQU[2,i] = beam_map[i]*cos(2*ang[2])
-        map_TQU[3,i] = beam_map[i]*sin(2*ang[2])*-1
+        map_TQU[3,i] = beam_map[i]*sin(2*ang[2])
     end
     return map_TQU
 end
@@ -63,4 +63,40 @@ function rotater(lmax, θ, φ, ψ, Blm)
         end
     end
     return blm_temp
+end
+
+function l_convolver(alm, blm)
+    return dot(blm, alm)
+end
+
+function l_rotater_pol(lmax, θ, φ, ψ, Blm_l, l)
+    blm_temp = zeros(ComplexF64, 2l+1)
+    #Blm_l = make_order_alm_2(Blm, lmax, l, l)
+    for m in -l:l
+        for n in -l:l
+            W = @views WignerD.wignerDjmn(l, m, n, φ, θ, ψ)
+            blm_temp[m+l+1] += Blm_l[n.+l.+1]*W
+        end
+    end
+    return blm_temp
+end
+
+function test_l_calculation_pol(alm_E,alm_B, Blm_E, Blm_B, lmax, npix, l_calc)
+    ψ = 0.0
+    conv = zeros(ComplexF64, npix)
+    for l in 0:l_calc
+        @show l
+        alm_E_proccesed = @views make_order_alm_2(alm_E, lmax, l, l)
+        alm_B_proccesed = @views make_order_alm_2(alm_B, lmax, l, l)
+        Blm_E_proccesed = @views make_order_alm_2(Blm_E, lmax, l, l)
+        Blm_B_proccesed = @views make_order_alm_2(Blm_B, lmax, l, l)
+        _2alm = @views alm_E_proccesed .+ 1im*alm_B_proccesed
+        _2Blm = @views Blm_E_proccesed .+ 1im*Blm_B_proccesed
+        for i in 1:npix
+            θ, φ = @views pix2angRing(res, i)
+            rotated_blm = @views l_rotater_pol(lmax, θ, φ, ψ, _2Blm, l)
+            conv[i] += @views l_convolver(_2alm, rotated_blm)
+        end
+    end
+    return conv
 end
