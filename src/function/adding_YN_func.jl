@@ -20,7 +20,7 @@ function make_beam_TQU(beam_map, NPIX, res)
     for i in 1:NPIX
         ang = pix2angRing(res, i)
         map_TQU[2,i] = beam_map[i]*cos(2*ang[2])
-        map_TQU[3,i] = beam_map[i]*sin(2*ang[2])
+        map_TQU[3,i] = beam_map[i]*sin(2*ang[2])*-1
     end
     return map_TQU
 end
@@ -49,6 +49,12 @@ function for_healpy_order(l, m::Integer, lmax::Integer)
     a += l - m
     return a
 end
+
+#=
+function for_healpy_order(l, m::Integer, lmax::Integer)
+    return Int(m.*(2 .*lmax .+ 1 .- m)/2 .+ l .+ 1)
+end
+=#
 
 function rotater(lmax, θ, φ, ψ, Blm)
     blm_temp = zeros(ComplexF64, length(Blm))
@@ -81,8 +87,8 @@ function l_rotater_pol(lmax, θ, φ, ψ, Blm_l, l)
     return blm_temp
 end
 
-function test_l_calculation_pol(alm_E,alm_B, Blm_E, Blm_B, lmax, npix, l_calc)
-    ψ = 0.0
+function test_l_calculation_pol(alm_E,alm_B, Blm_E, Blm_B, lmax, npix, l_calc, ψ)
+    #ψ = 0.0
     conv = zeros(ComplexF64, npix)
     for l in 0:l_calc
         @show l
