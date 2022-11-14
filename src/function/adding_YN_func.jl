@@ -1,5 +1,5 @@
-function gauss_3d_xyz(NPIX, fwhm, xpeak, ypeak, zpeak)
-    sigma = fwhm/(2*sqrt(2*np.log(2))) 
+function gauss_3d_xyz(NPIX, fwhm, xpeak, ypeak, zpeak, res)
+    sigma = fwhm/(2*sqrt(2*log(2))) 
     G = zeros(NPIX)
     for i in 1:NPIX
         ang = pix2angRing(res, i)
@@ -87,7 +87,7 @@ function l_rotater_pol(lmax, θ, φ, ψ, Blm_l, l)
     return blm_temp
 end
 
-function test_l_calculation_pol(alm_E,alm_B, Blm_E, Blm_B, lmax, npix, l_calc, ψ)
+function test_l_calculation_pol(alm_E,alm_B, Blm_E, Blm_B, lmax, npix, l_calc, ψ, res)
     #ψ = 0.0
     conv = zeros(ComplexF64, npix)
     for l in 0:l_calc
