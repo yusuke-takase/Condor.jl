@@ -229,6 +229,7 @@ function unique_theta_detect(num, NSIDE, NPIX)
     return Int(start), Int(stop)
 end
 
+
 function get_psi_make_TOD(ss::ScanningStrategy,; division::Int, idx, map_div, dir)
     nside = ss.nside
     resol = Resolution(ss.nside)
@@ -262,27 +263,26 @@ function get_psi_make_TOD(ss::ScanningStrategy,; division::Int, idx, map_div, di
                 #position_psi = Int(round(psi/(2pi)*(calcmax_phi)))+1
                 if pixmin <= ipix <= pixmax
                     #push!(psi_db[pixmax+1-ipix], psi)
-                    psi = 2.0 .*ω_hwp.*t .- psi_tod_jth_det[k] .+pi
-                    
+                    psi = - psi_tod_jth_det[k] .+pi
+                    #psi = 2.0 .*ω_hwp.*t .- psi_tod_jth_det[k] .+pi
+                    #=
                     if psi < 0
                         psi = 2pi .+ psi
                     end
-                    #=
-                    if psi > 2pi
-                        @show psi
-                        psi = psi - 2pi
-                    end
                     =#
-                    #psi = 0
-                    @views position_psi = Int(round(psi.*(calcmax_psi./(2 .*pi)))).+1
+                    @views position_psi = Int(round(psi.*(calcmax_psi./(2 .*pi))))
+                    
+                    if position_psi == 0
+                        position_psi = 1
+                    end
                     #position_psi =1
-                    @views re_psi = (position_psi.-1).*(2pi./calcmax_psi)
+                    @views re_psi = (position_psi.-1).*(2pi./calcmax_psi) .+ 4.0 .*mod2pi(ω_hwp).*t
                     #@show psi ,position_psi, re_psi 
                     #@show re_psi
                     position = 1 .+ipix .- pixmin
                     @views QiU_φψ=read(fid,"i=$ipix")
-                    @views d[1,position] += real(QiU_φψ[position_psi]).*exp(2im*re_psi)
-                    @views d[2,position] += real(QiU_φψ[position_psi]).*exp(-2im*re_psi)
+                    @views d[1,position] += real(QiU_φψ[position_psi].*exp(-2im.*4.0 .*mod2pi(ω_hwp).*t)).*exp(2im*re_psi)
+                    @views d[2,position] += real(QiU_φψ[position_psi].*exp(-2im.*4.0 .*mod2pi(ω_hwp).*t)).*exp(-2im*re_psi)
                     @views d[3,position] += 1
                     @views result_h[1,position] += exp(2 .*1im.*re_psi)
                     @views result_h[2,position] += exp(4 .*1im.*re_psi)
