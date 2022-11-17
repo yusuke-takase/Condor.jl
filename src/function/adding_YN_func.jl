@@ -143,6 +143,7 @@ function FFTConv_demo(alm, blm, unique_θ, lmax, nside, idx, dir)
     Tlmn_mtr = zeros(ComplexF64, ini_calcmax, ini_calcmax)
     QiU_φψ = zeros(ComplexF64, ini_calcmax, ini_calcmax)
     calcmax_psi = 8nside
+    npix = nside2npix(nside)
     #@show θ
     for θ in idx:idx
         calcmax_phi = pix_calcmax(θ,nside)
