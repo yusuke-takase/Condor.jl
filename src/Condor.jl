@@ -15,6 +15,7 @@ using Falcons
 #np = pyimport("numpy")
 #pd = pyimport("pandas")
 using WignerD
+using FFTW
 #=
 function __init__()
     copy!(hp, pyimport_conda("healpy", "healpy"))
