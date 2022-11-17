@@ -47,4 +47,15 @@ function bm_polar_stokesrotate(beam::bmpolar)
     return beam
 end
 
-
+function bm_polar_normalise(beam::bmpolar, norm)
+    if norm == "unity"
+        beam.stokes = beam.stokes * 0.5
+    elseif norm == "four_pi"
+        beam.stokes = beam.stokes * 0.5 / (4*pi)
+    elseif norm == "eight_pi"
+        beam.stokes = beam.stokes * 0.25 / (4*pi)
+    else
+        error("Unknown normalisation convention")
+    end
+    return beam
+end

@@ -60,51 +60,50 @@ function beam2alm(args::Dict)
     println("Calculating multipoles up to lmax = $lmax, mmax = $mmax")
     main = bm_polar_stokesrotate(main)
     
-    
-    map = PolarizedHealpixMap{Float64, RingOrder}(nside)
-    map.i.pixels[:] .= UNSEEN
-    map.q.pixels[:] .= UNSEEN
-    map.u.pixels[:] .= UNSEEN
+    beammap = PolarizedHealpixMap{Float64, RingOrder}(nside)
+    beammap.i.pixels[:] .= 0
+    beammap.q.pixels[:] .= 0
+    beammap.u.pixels[:] .= 0
     resol = Resolution(256)
     
     for ipix in 1:nside2npix(nside)
         theta, phi = pix2angRing(resol, ipix)
         if main_present && theta<main.theta_max
-            map.i.pixels[ipix] = bm_polar_get_value(main, theta, phi, 1)
-            map.q.pixels[ipix] = bm_polar_get_value(main, theta, phi, 2)
-            map.u.pixels[ipix] = bm_polar_get_value(main, theta, phi, 3)
+            beammap.i.pixels[ipix] = bm_polar_get_value(main, theta, phi, 1)
+            beammap.q.pixels[ipix] = bm_polar_get_value(main, theta, phi, 2)
+            beammap.u.pixels[ipix] = bm_polar_get_value(main, theta, phi, 3)
         elseif full_present
-            map.i.pixels[ipix] = bm_polar_get_value(full, theta, phi, 1)
-            map.q.pixels[ipix] = bm_polar_get_value(full, theta, phi, 2)
-            map.u.pixels[ipix] = bm_polar_get_value(full, theta, phi, 3)
+            beammap.i.pixels[ipix] = bm_polar_get_value(full, theta, phi, 1)
+            beammap.q.pixels[ipix] = bm_polar_get_value(full, theta, phi, 2)
+            beammap.u.pixels[ipix] = bm_polar_get_value(full, theta, phi, 3)
         else
             continue
         end
     end
     
-    alm = map2alm(map, lmax = lmax, mmax = mmax)
+    alm = map2alm(beammap, lmax = lmax, mmax = mmax)
     if healpix_output
-        return map, alm
+        return beammap, alm
     else
         return alm 
     end
 end
 
 function bm_polar_get_value(beam::bmpolar, theta, phi, x)
-    dth = (pi/2.) / 1000.
-    dph = 2. * pi / 1000.
+    dth = (beam.theta_max-beam.theta_min)/(beam.ntheta-1)
+    dph = 2. * pi / beam.nphi
 
-    ith1 = trunc(Int, theta/dth)
-    ith1 = max(1, min(1000,ith1))
+    ith1 = 1 + trunc(Int, theta/dth)
+    ith1 = max(1, min(beam.ntheta-1,ith1))
     ith2 = ith1+1
-    iph1 = trunc(Int, phi/dph)
-    iph1 = max(1, min(1000,iph1))
+    iph1 = 1 + trunc(Int, phi/dph)
+    iph1 = max(1, min(beam.nphi,iph1))
     iph2 = iph1+1
-    if (iph2>1000) 
+    if (iph2>beam.nphi) 
         iph2=1
     end
 
-    th1 = 0. + (ith1 - 1)*dth
+    th1 = beam.theta_min + (ith1 - 1)*dth
     wth = 1. - (theta-th1)/dth
 
     ph1 = (iph1 - 1)*dph

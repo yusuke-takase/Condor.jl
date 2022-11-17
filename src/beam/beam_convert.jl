@@ -25,8 +25,8 @@ function bm_grid2polar(beam::bmgrid; copol::String = "x")
     swaptheta = theta_min > theta_max
     if swaptheta
         println("Warning: swapping theta direction")
-        theta_min = beam.ye * np.pi / 180.0
-        theta_max = beam.ys * np.pi / 180.0
+        theta_min = beam.ye * pi / 180.0
+        theta_max = beam.ys * pi / 180.0
     end
     beam_p = bm_polar_init(nphi, ntheta, theta_min, theta_max)
     # dphi = 2. * pi / nphi
