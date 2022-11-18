@@ -394,9 +394,9 @@ function get_psi_make_TOD_T(ss::ScanningStrategy,; division::Int, idx, map_div, 
                     #@show re_psi
                     position = 1 .+ipix .- pixmin
                     @views T_φψ=read(fid,"i=$ipix")
-                    @views d[1,position] += real(T_φψ[position_psi]
-                    @views d[2,position] += real(T_φψ[position_psi].*exp(-2im.*4.0 .*mod2pi(ω_hwp).*t)).*exp(2im*re_psi)
-                    @views d[3,position] += real(T_φψ[position_psi].*exp(-2im.*4.0 .*mod2pi(ω_hwp).*t)).*exp(-2im*re_psi)
+                    @views d[1,position] += T_φψ[position_psi]
+                    @views d[2,position] += T_φψ[position_psi].*exp(-2im.*4.0 .*mod2pi(ω_hwp).*t).*exp(2im*re_psi)
+                    @views d[3,position] += T_φψ[position_psi].*exp(-2im.*4.0 .*mod2pi(ω_hwp).*t).*exp(-2im*re_psi)
                     @views d[4,position] += 1
                     @views result_h[1,position] += exp(2 .*1im.*re_psi)
                     @views result_h[2,position] += exp(4 .*1im.*re_psi)
