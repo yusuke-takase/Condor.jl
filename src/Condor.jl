@@ -29,6 +29,5 @@ include("./function/adding_YN_func.jl")
 export get_2Ddata, symmetrizer, dBi, gen_beammap, beam_pointor, AlmPair, gen_Blm, gen_GaussBeammap
 export EffectiveBeamConvolution, GaussBeamConvolution, convolvor
 export gauss_3d_xyz, make_beam_TQU, unique_theta, FFTConv_demo, get_psi_make_TOD, solver_matrix, for_healpy_order, pix_calcmax, FFTConv_demo_onlyT, get_psi_make_TOD_T
-export npzread
 
 end
