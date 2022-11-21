@@ -16,6 +16,7 @@ using Falcons
 #pd = pyimport("pandas")
 using WignerD
 using FFTW
+using NPZ
 #=
 function __init__()
     copy!(hp, pyimport_conda("healpy", "healpy"))
