@@ -408,7 +408,7 @@ function get_psi_make_TOD_T(ss::ScanningStrategy,; division::Int, idx, map_div, 
     end
     close(fid)
     #return  psi_db, d
-    return  [d[1,:]./Int.(d[4,:]) d[2,:]./Int.(d[4,:]) d[3,:]./Int.(d[4,:]) ],  [result_h[1,:]./Int.(d[3,:]) result_h[2,:]./Int.(d[3,:])]
+    return  [d[1,:]./Int.(d[4,:]) d[2,:]./Int.(d[4,:]) d[3,:]./Int.(d[4,:]) ],  [result_h[1,:]./Int.(d[4,:]) result_h[2,:]./Int.(d[4,:])]
 end
 
 function solver_matrix_full(h, dj)
