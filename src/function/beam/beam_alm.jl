@@ -12,17 +12,15 @@ function bm_alm_init(lmax, mmax, nstokes)
     mmax_temp = mmax
     if lmax < 0
         error("bm_alm_init: lmax < 0")
-    else if mmax < 0
+    elseif mmax < 0
         error("bm_alm_init: mmax < 0")
-    else if mmax > lmax
-    println("Warning from bm_alm_init: mmax > lmax: setting mmax = lmax")
-    mmax_temp = lmax
-    end if
-
+    elseif mmax > lmax
+        println("Warning from bm_alm_init: mmax > lmax: setting mmax = lmax")
+        mmax_temp = lmax
+    end
     if !(nstokes == 1 || nstokes == 3 || nstokes == 4 )
-    error("bm_alm_init: nstokes must be  1, 3 or 4")
-    end if
-
+        error("bm_alm_init: nstokes must be  1, 3 or 4")
+    end
     a = zeros(ComplexF32, (nstokes, lmax, mmax_temp))
     return bmalm(lmax, mmax_temp, nstokes, a)
 end
@@ -52,5 +50,3 @@ function truncate_alm(alm::Vector, lmax, mmax)
     return [alm_t, alm_e, alm_b]
 end
                 
-@. gaussbeam(θ, σ) = exp(-θ^2/(2*σ^2))/(σ*sqrt(2*pi))/(σ*sqrt(2*pi))
-sigma(fwhm) = fwhm/(2*sqrt(2*log(2))) 
