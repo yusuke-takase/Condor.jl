@@ -26,7 +26,7 @@ function symmetrizer(psi_in_ipix, beam2d, Nx, Ny)
     return beam_reconst_sym
 end
 
-@. dBi(x) =10log10(x)
+@. dbi(x) =10log10(x)
 
 function gen_beammap(res::Resolution, beam2d, target_pixel)
     Nx, Ny = size(beam2d)

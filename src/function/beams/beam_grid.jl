@@ -1,4 +1,4 @@
-mutable struct bmgrid{S<:String, I<:Int, F<:Float64,AA<:Array}
+mutable struct bmgrid{S<:String, I<:Int, F<:Float64,AA<:AbstractArray}
     #= Create empty variables or lists of attributes for holding data for each dataset =#
     # Text Header
     header::S

@@ -26,7 +26,7 @@ function symmetrizer(psi_in_ipix, beam2d, Nx, Ny)
     return beam_reconst_sym
 end
 
-@. dBi(x) =10log10(x)
+@. dbi(x) =10log10(x)
 
 function gen_beammap(res::Resolution, beam2d, target_pixel)
     Nx, Ny = size(beam2d)
@@ -73,11 +73,11 @@ mutable struct AlmPair{T<:Matrix{ComplexF64}}
     almconj::T
 end
 
-function gen_Blm(res::Resolution, beammap)
+function gen_Blm(res::Resolution, beammap, weight_path)
     lmax = 3res.nside - 1
     beammap_pol = zeros(3, res.numOfPixels)
     beammap_pol[2,:] .= beammap .* (res.numOfPixels ./ (4π*sum(beammap)))
-    Blm = hp.map2alm(beammap_pol, lmax = lmax, datapath = "/home/cmb/yusuket/program/MapData/healpy-data/.", use_pixel_weights=true)
+    Blm = hp.map2alm(beammap_pol, lmax = lmax, datapath = weight_path, use_pixel_weights=true)
     return AlmPair(Blm, conj.(Blm))
 end
 

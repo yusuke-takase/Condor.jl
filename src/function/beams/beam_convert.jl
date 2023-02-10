@@ -1,6 +1,3 @@
-include("beam_grid.jl")
-include("beam_polar.jl")
-
 function bm_grid2polar(beam::bmgrid; copol::String = "x")
 
     # Check metadata of input beam.
@@ -85,4 +82,71 @@ function bm_grid2polar(beam::bmgrid; copol::String = "x")
     return beam_p
 end
 
-    
+
+function bm_cut2polar(beam_c::bmcut,; copol="x")
+    ncut, np, nphi, ntheta, icut, iphi, itheta, sign = 0, 0, 0, 0, 0, 0, 0, 0
+    theta_min, theta_max, dphi = 0.0, 0.0, 0.0
+    modc2, modx2 = 0.0, 0.0
+    c, x, acaxs = 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im
+    amp_tmp = Array{Complex{Float64}}[]
+
+    # Check metadata of input beam.
+    if beam_c.icomp != 3
+        error("Error in bm_cut2polar: beam is not in linear co and cx components")
+    end
+    if beam_c.icon != 1
+        error("Error in bm_cut2polar: beam is not in phi cuts")
+    end
+    if beam_c.ncomp != 2
+        error("Error in bm_cut2polar: beam has the wrong number of components")
+    end
+
+    # Work out the number of theta and phi values in the cuts.
+    ncut = beam_c.ncut
+    np = beam_c.np
+
+    nphi = 2 * ncut
+    ntheta = div(np + 1, 2)
+
+    # Note theta min and max angles are in radians.
+    theta_min = 0.0
+    theta_max = abs(beam_c.sa) * pi / 180.0
+
+    beam_p = bm_polar_init(nphi, ntheta, theta_min, theta_max)
+
+    # Reshape amplitude array into a temporary array.
+    amp_tmp = zeros(Complex{Float64}, 2, nphi, ntheta)
+
+    for icut = 1:ncut
+        amp_tmp[:, icut, :] = beam_c.amp[:, ntheta:np, icut]
+        amp_tmp[:, ncut + icut, :] = beam_c.amp[:, ntheta:-1:1, icut]
+    end
+
+    # Convert amplitudes into Stokes parameters.
+    dphi = 2π / nphi
+
+    if copol == "x"
+        sign = -1
+    elseif copol == "y"
+        sign = 1
+    else
+        error("Error in bm_cut2polar: unknown value for copol")
+    end
+
+    for itheta = 1:ntheta
+        for iphi = 1:nphi
+            c = amp_tmp[1, iphi, itheta]
+            x = amp_tmp[2, iphi, itheta]
+
+            modc2 = abs(c)^2
+            modx2 = abs(x)^2
+            acaxs = c * conj(x)
+
+            beam_p.stokes[1, iphi, itheta] = modc2 + modx2
+            beam_p.stokes[2, iphi, itheta] = sign * (modc2 - modx2)
+            beam_p.stokes[3, iphi, itheta] = sign * 2.0 * real(acaxs)
+            beam_p.stokes[4, iphi, itheta] = 2.0 * imag(acaxs)
+        end
+    end
+    return beam_p
+end

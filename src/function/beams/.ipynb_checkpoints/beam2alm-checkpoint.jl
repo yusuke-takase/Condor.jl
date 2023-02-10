@@ -84,13 +84,18 @@ function beam2alm(args::Dict)
         end
     end
     
-    full_weight_path = args["full_weight_path"]
-    if haskey(args, "full_weight_path")
-        full_weight = true
+    use_full_weight = false
+    if haskey(args, "use_full_weight")
+        use_full_weight = true
+        full_weight_path = "/group/cmb/litebird/usr/full_weights/healpix_full_weights_nside_$(lpad(nside,4,'0')).fits"
+        @warn "Healpix full weight was taken into account before expanding the beam map to blm. If you want to change the full weight used, specify `full_weight_path=<path>`."
+        if haskey(args, "full_weight_path")
+            full_weight_path = args["full_weight_path"]
+        end
     end
-    if full_weight
+        
+    if use_full_weight
         compressed_weights = Healpix.readFullWeights(full_weight_path)
-        #"/home/cmb/yusuket/program/MapData/healpy-data/full_weights/healpix_full_weights_nside_$(lpad(nside,4,'0')).fits")
         applyFullWeights!(beammap.i, compressed_weights)
         applyFullWeights!(beammap.q, compressed_weights)
         applyFullWeights!(beammap.u, compressed_weights)

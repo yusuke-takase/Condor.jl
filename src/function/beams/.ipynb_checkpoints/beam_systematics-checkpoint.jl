@@ -20,4 +20,6 @@ function symmetrize(beam::bmpolar, atack_angles, average::Bool)
 end
 
 angular_gaussbeam(θ, σ) = @. exp(-θ^2/(2*σ^2))/(σ*sqrt(2*pi))/(σ*sqrt(2*pi))
-fwhm2sigma(fwhm) = fwhm/(2*sqrt(2*log(2))) 
+fwhm2std(fwhm) = fwhm/(2*sqrt(2*log(2))) 
+absdbi(x) = @. 10log10(abs(x))
+dbi(x) = @. 10log10(x)

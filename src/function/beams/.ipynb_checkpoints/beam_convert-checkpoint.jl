@@ -1,6 +1,3 @@
-include("beam_grid.jl")
-include("beam_polar.jl")
-
 function bm_grid2polar(beam::bmgrid; copol::String = "x")
 
     # Check metadata of input beam.
