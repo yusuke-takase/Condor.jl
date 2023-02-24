@@ -101,3 +101,13 @@ function pix_calcmax(idx,nside)
     end
     return calcmax
 end  
+
+function　unique_theta(NPIX, res)
+    θ= zeros(NPIX)
+    #map_TQU[1,:] .= beam_map
+    for i in 1:NPIX
+        ang = pix2angRing(res, i)
+        θ[i] = ang[1]
+    end
+    return unique(θ)
+end
