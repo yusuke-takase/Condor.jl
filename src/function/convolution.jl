@@ -90,7 +90,7 @@ function FFTConvolution_T(;alm, blm, nside, lmax, dir, idx)
         Tlmn_mtr[1+m,1+n] += Wigner_l[1,1]*(alm[1,1])*conj(blm[1,1] )
     
         @time for l in lmax:-1:1
-            @show l
+            #@show l
             m = 0
             p_alm = for_healpy_order(l, m, lmax)
             n = 0
