@@ -140,7 +140,7 @@ end
 
 function FFTConvolution_T(;alm, blm, nside, lmax, dir, idx)
     npix = nside2npix(nside)
-    res = Resolition(nside)
+    res = Resolution(nside)
     unique_θ = unique_theta(npix, res)
     ini_calcmax = 12nside
     Tlmn_mtr = zeros(ComplexF64, ini_calcmax, ini_calcmax)
