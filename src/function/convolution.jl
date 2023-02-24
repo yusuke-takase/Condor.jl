@@ -89,7 +89,7 @@ function FFTConvolution_T(;alm, blm, nside, lmax, dir, idx)
         Wigner_l = WignerD.wignerd(l, unique_θ[θ])
         Tlmn_mtr[1+m,1+n] += Wigner_l[1,1]*(alm[1,1])*conj(blm[1,1] )
     
-        @time for l in lmax:-1:1
+        for l in lmax:-1:1
             #@show l
             m = 0
             p_alm = for_healpy_order(l, m, lmax)
@@ -232,7 +232,7 @@ function FFTConvolution_QU(;alm, blm, nside, lmax, dir, idx)
         Wigner_l = WignerD.wignerd(l, unique_θ[θ])
         Tlmn_mtr[1+m,1+n] += Wigner_l[1,1]*(alm[2,1] + 1im*alm[3,1])*conj(blm[2,1] + 1im*blm[3,1])
     
-        @time for l in lmax:-1:1
+        for l in lmax:-1:1
             #@show l
             m = 0
             p_alm = for_healpy_order(l, m, lmax)
