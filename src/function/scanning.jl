@@ -17,8 +17,8 @@ function get_psi_make_TOD_TQU_HWP(ss::ScanningStrategy,; division::Int, idx, map
     calcmax = pix_calcmax(idx,ss.nside)
     calcmax_psi = 8ss.nside
     φposition_array = zeros(Int32, (pixmax-pixmin+1))
-    fid_T = h5open(dir_T, "r")
-    fid_QU = h5open(dir_QU, "r")
+    fid_T = h5open(dir_T*"=$idx", "r")
+    fid_QU = h5open(dir_QU*"=$idx", "r")
     @views @inbounds for i = 1:division
         END = i .* month
         pix_tod, psi_tod, time_array = get_pointing_pixels(ss, BEGIN, END)
