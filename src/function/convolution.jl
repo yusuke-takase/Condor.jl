@@ -127,7 +127,7 @@ function FFTConvolution_T(;alm, blm, nside, lmax, dir, idx)
     end
     
     pixmin,pixmax=unique_theta_detect(idx, nside,npix)
-    fid = h5open(dir, "w")
+    fid = h5open(dir*"=$idx", "w")
     resol = Resolution(nside)
     calcmax = pix_calcmax(idx,nside)
     for i in pixmin:pixmax
@@ -269,7 +269,7 @@ function FFTConvolution_QU(;alm, blm, nside, lmax, dir, idx)
         QiU_φψ[1:calcmax_phi,1:calcmax_psi] = ifft(Tlmn_mtr[1:calcmax_phi,1:calcmax_psi].*calcmax_phi.*calcmax_psi)
     end
     pixmin,pixmax=unique_theta_detect(idx, nside,npix)
-    fid = h5open(dir, "w")
+    fid = h5open(dir*"=$idx", "w")
     resol = Resolution(nside)
     calcmax = pix_calcmax(idx,nside)
     for i in pixmin:pixmax
