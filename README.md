@@ -9,5 +9,5 @@ From the Julia REPL, run
 
 ```julia
 import Pkg
-Pkg.add("Falcons")
+Pkg.add("Condor")
 ```
