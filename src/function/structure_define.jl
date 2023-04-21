@@ -1,5 +1,5 @@
 mutable struct ConvolutionParams{I<:Int, MC<:Matrix{Complex{Float64}}, VI<:Vector{Int64}}
-    nside::I
+    npix::I
     lmax::I
     alm::MC
     blm::MC
@@ -7,14 +7,14 @@ mutable struct ConvolutionParams{I<:Int, MC<:Matrix{Complex{Float64}}, VI<:Vecto
 end
 
 function gen_ConvolutionParams(;
-        nside=128,
+        npix=128,
         lmax=3nside-1,
         alm = [1.0+1im 1.0+1im;1.0+1im 1.0+1im],
         blm = [1.0+1im 1.0+1im;1.0+1im 1.0+1im],
         l_range = [0,0]
     )
     return ConvolutionParams(
-        nside,
+        npix,
         lmax,
         alm,
         blm,
