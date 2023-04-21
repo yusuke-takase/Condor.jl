@@ -37,44 +37,6 @@ function tod_convolution_idalhwp(cp, theta_tod, phi_tod, psi_tod, alpha)
     return tod
 end
 
-function tod_convolution_idalhwp(alm, blm, lmax, npix, l_calc, theta_tod, phi_tod, psi_tod, alpha)
-    tod = zeros(Float64, length(theta_tod[:]))
-    for l in l_calc[1]:l_calc[2]
-        #@show l
-        W = WignerD.wignerd(l,pi/2)
-        alm_T = make_order_alm_2(alm[1,:], lmax, l, l)
-        blm_T = make_order_alm_2(blm[1,:], lmax, l, l)
-        alm_E= @views make_order_alm_2(alm[2,:], lmax, l, l)
-        alm_B = @views make_order_alm_2(alm[3,:], lmax, l, l)
-        Blm_E = @views make_order_alm_2(blm[2,:], lmax, l, l)
-        Blm_B = @views make_order_alm_2(blm[3,:], lmax, l, l)
-        _2alm = @views -(alm_E .+ 1im*alm_B)
-        _2blm = @views -(Blm_E .+ 1im*Blm_B)
-        ell_v = Vector(-l:1:l)
-        φ_temp = exp.(-1im*ell_v*(pi./2))
-        ψ_temp = exp.(-1im*ell_v*(pi./2))
-        S0 = W*(alm_T.*φ_temp)
-        B0 = W*(blm_T.*ψ_temp)
-        SB0 = S0.*conj.(B0)
-        S2 =  W*(_2alm.*φ_temp) #exp(pi*im)
-        B2 = W*(_2blm.*ψ_temp)
-        SB2 = S2.*conj.(B2)
-        for i in 1:length(theta_tod[:])
-            ψ2 = 2.0.*psi_tod[i]
-            φ_temp = exp.(-1im*ell_v*pi./2).*exp.(1im*ell_v*phi_tod[i])
-            ψ_temp = exp.(-1im*ell_v*psi_tod[i]) .* exp.(-1im*ell_v*pi./2)
-            S0 = W*(alm_T.*φ_temp)
-            B0 = W*(blm_T.*ψ_temp)
-            SB0 = S0.*conj.(B0)
-            S2 =  W*(_2alm.*φ_temp) #exp(pi*im)
-            B2 = W*((exp(4im*alpha[i]))*_2blm.*ψ_temp)
-            SB2 = S2.*conj.(B2)
-            temp = real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB0) .+ real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB2)))
-            tod[i] += @views temp
-        end
-    end
-    return tod
-end
 
 function FFTConvolution_T(alm, blm, unique_θ, lmax, nside, idx, dir)
     ini_calcmax = 12nside
