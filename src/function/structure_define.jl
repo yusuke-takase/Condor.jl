@@ -7,8 +7,8 @@ mutable struct ConvolutionParams{I<:Int, MC<:Matrix{Complex{Float64}}, VI<:Vecto
 end
 
 function gen_ConvolutionParams(;
-        npix=128,
-        lmax=3nside-1,
+        npix=12*128^2,
+        lmax=3*128-1,
         alm = [1.0+1im 1.0+1im;1.0+1im 1.0+1im],
         blm = [1.0+1im 1.0+1im;1.0+1im 1.0+1im],
         l_range = [0,0]
