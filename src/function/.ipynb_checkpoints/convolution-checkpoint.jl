@@ -28,7 +28,7 @@ function tod_convolution_idalhwp(cp, theta_tod, phi_tod, psi_tod, alpha)
             B0 = W*(blm_T.*ψ_temp)
             SB0 = S0.*conj.(B0)
             S2 =  W*(_2alm.*φ_temp) #exp(pi*im)
-            B2 = W*((exp(4im*alpha[i]))*_2blm.*ψ_temp)
+            B2 = W*((exp(-4im*alpha[i]))*_2blm.*ψ_temp)
             SB2 = S2.*conj.(B2)
             temp = real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB0) .+ real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB2)))
             tod[i] += @views temp
