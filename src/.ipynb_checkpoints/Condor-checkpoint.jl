@@ -10,10 +10,6 @@ using ProgressMeter
 using HDF5
 using Interpolations
 using Falcons
-<<<<<<< HEAD
-#const hp = pyimport("healpy")
-#np = pyimport("numpy")
-#pd = pyimport("pandas")
 using WignerD
 using FFTW
 using NPZ
@@ -37,9 +33,6 @@ export gauss_3d_xyz, make_beam_TQU, unique_theta, FFTConv_demo, get_psi_make_TOD
 export FFTConvolution_QU, FFTConvolution_T, get_psi_make_TOD_TQU_HWP, solver_matrix_TQU
 export get_pointings_theta_phi_psi_alpha_pix_tod, tod_convolution_idalhwp
 export ConvolutionParams, gen_ConvolutionParams
-=======
-using WignerD
-using FFTW
 using Statistics
 
 #include("./function/beam_func.jl")
@@ -58,5 +51,5 @@ include("./function/beams/beam_systematics.jl")
 #export EffectiveBeamConvolution, GaussBeamConvolution, convolvor
 export gauss_3d_xyz, make_beam_TQU, unique_theta, FFTConv_demo, get_psi_make_TOD, solver_matrix, for_healpy_order, pix_calcmax
 export bmpolar, bm_grid2polar, truncate_alm, bm_alm_init, bm_grid_read, bm_cut_read, bm_polar_init, bm_polar_normalise!, beam2alm, symmetrize, fwhm2sigma, angular_gaussbeam, fwhm2std, bmcut, bm_cut2polar, absdbi, dbi
->>>>>>> master
+
 end
