@@ -37,7 +37,7 @@ using Statistics
 
 #include("./function/beam_func.jl")
 #include("./function/convolution_func.jl")
-include("./function/adding_YN_func.jl")
+#include("./function/adding_YN_func.jl")
 
 include("./function/beams/beam_alm.jl")
 include("./function/beams/beam_grid.jl")
