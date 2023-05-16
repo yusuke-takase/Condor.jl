@@ -147,3 +147,24 @@ function　unique_theta(NPIX, res)
     end
     return unique(θ)
 end
+
+function R_complex(hwp_ang)
+    r = [1 0 0
+            0 exp(-2im*hwp_ang) 0
+            0 0 exp(2im*hwp_ang)]
+    return r
+end
+
+function complex_Muller(M_r)
+    M_c = zeros(ComplexF64, 3,3)
+    M_c[1,1] = M_r[1,1]
+    M_c[1,2] = (M_r[1,2] - im* M_r[1,3])/sqrt(2)
+    M_c[1,3] = (M_r[1,2] + im* M_r[1,3])/sqrt(2)
+    M_c[2,1] = (M_r[2,1] + im*M_r[3,1])/sqrt(2)
+    M_c[2,2] = (M_r[2,2] + M_r[3,3] + im* (M_r[3,2] - M_r[2,3]))/2
+    M_c[2,3] = (M_r[2,2] - M_r[3,3] + im* (M_r[3,2] + M_r[2,3]))/2
+    M_c[3,1] = (M_r[2,1] - im*M_r[3,1])/sqrt(2)
+    M_c[3,2] = (M_r[2,2] - M_r[3,3] - im* (M_r[3,2] + M_r[2,3]))/2
+    M_c[3,3] = (M_r[2,2] + M_r[3,3] - im* (M_r[3,2] - M_r[2,3]))/2
+    return M_c
+end
