@@ -13,5 +13,5 @@ From the Julia REPL, run
 
 ```julia
 import Pkg
-Pkg.add("Condor")
+Pkg.add("https://github.com/yusuke-takase/Condor.jl.git")
 ```
