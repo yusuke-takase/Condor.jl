@@ -143,7 +143,7 @@ function tod_convolution_like_mc2(cp, theta_tod, phi_tod, psi_tod, alpha, M_r)
             SB0 = S0.*conj.(B0)
             #SB0 = 0
             S2 =  W*(alm_full[2,l+1,-l+cp.lmax+1:l+cp.lmax+1].*φ_temp) #exp(pi*im)
-            B2 = W*((M_rotate[1,2].*blm_full[1,l+1,-l+cp.lmax+1+6:l+cp.lmax+1+6].*e2iac .*sqrt2 .+ M_rotate[2,2].*blm_full[2,l+1,-l+cp.lmax+1+4:l+cp.lmax+1+4] .+ M_rotate[3,2].*blm_full[3,l+1,-l+cp.lmax+1+8:l+cp.lmax+1+8].*e4iac).*ψ_temp)
+            B2 = W*((M_rotate[1,2].*blm_full[1,l+1,-l+cp.lmax+1+2:l+cp.lmax+1+2].*e2iac .*sqrt2 .+ M_rotate[2,2].*blm_full[2,l+1,-l+cp.lmax+1+4:l+cp.lmax+1+4] .+ M_rotate[3,2].*blm_full[3,l+1,-l+cp.lmax+1+8:l+cp.lmax+1+8].*e4iac).*ψ_temp)
             SB2 = S2.*conj.(B2)
             #SB2=0
             temp = real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB0) .+ real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB2)))
