@@ -139,7 +139,7 @@ function tod_convolution_like_mc2(cp, theta_tod, phi_tod, psi_tod, alpha, M_r)
             φ_temp = exp.(-1im*ell_v*pi./2).*exp.(1im*ell_v*phi_tod[i])
             ψ_temp = exp.(-1im*ell_v*psi_tod[i]) .* exp.(-1im*ell_v*pi./2)
             S0 = W*(alm_full[1,l+1,-l+cp.lmax+1:l+cp.lmax+1].*φ_temp)
-            B0 = W*((C[1,1].*blm_full[1,l+1,-l+cp.lmax+1+4:l+cp.lmax+1+4] .+ C[2,1].*blm_full[2,l+1,-l+cp.lmax+1+6:l+cp.lmax+1+6]/sqrt2*e2ia .+ C[3,1].*blm_full[3,l+1,-l+cp.lmax+1+2:l+cp.lmax+1+2]/sqrt2*e2iac).*ψ_temp)
+            B0 = W*((C[1,1].*blm_full[1,l+1,-l+cp.lmax+1+4:l+cp.lmax+1+4] .+ C[2,1].*blm_full[3,l+1,-l+cp.lmax+1+6:l+cp.lmax+1+6]/sqrt2*e2ia .+ C[3,1].*blm_full[2,l+1,-l+cp.lmax+1+2:l+cp.lmax+1+2]/sqrt2*e2iac).*ψ_temp)
             SB0 = S0.*conj.(B0)
             #SB0 = 0
             S2 =  W*(alm_full[2,l+1,-l+cp.lmax+1:l+cp.lmax+1].*φ_temp) #exp(pi*im)
