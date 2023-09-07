@@ -64,7 +64,26 @@ function make_order_alm_3(alm, lmax)
         end
     end
     return new_alm
-end 
+end
+
+function make_order_alm_3_2(alm, lmax)
+    new_alm = zeros(ComplexF64, 3, lmax+1, 2lmax+1)
+    for l in 0:lmax
+        for m in -l:1:-1
+            idx = for_healpy_order(l,-m, lmax)
+            new_alm[1,l+1,m+lmax+1] = conj(alm[1,idx])*(-1)^m
+            new_alm[2,l+1,m+lmax+1] = -(conj(alm[2,idx])+1im*conj(alm[3,idx]))*(-1)^m
+            new_alm[3,l+1,m+lmax+1] = -(conj(alm[2,idx])-1im*conj(alm[3,idx]))*(-1)^m
+        end
+        for m in 0:l
+            idx = for_healpy_order(l,m, lmax)
+            new_alm[1,l+1,m+lmax+1] = alm[1,idx]
+            new_alm[2,l+1,m+lmax+1] = -(alm[2,idx]+1im*alm[3,idx])
+            new_alm[3,l+1,m+lmax+1] = -(alm[2,idx]-1im*alm[3,idx])
+        end
+    end
+    return new_alm
+end
 
 function make_order_alm_4(alm, lmax)
     new_alm = zeros(ComplexF64, 3, lmax+1, 2lmax+1 + 8)
