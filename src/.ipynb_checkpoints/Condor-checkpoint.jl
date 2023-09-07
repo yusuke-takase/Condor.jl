@@ -31,7 +31,7 @@ export get_2Ddata, symmetrizer, dBi, gen_beammap, beam_pointor, AlmPair, gen_Blm
 export EffectiveBeamConvolution, GaussBeamConvolution, convolvor
 export gauss_3d_xyz, make_beam_TQU, unique_theta, FFTConv_demo, get_psi_make_TOD, solver_matrix, for_healpy_order, pix_calcmax, FFTConv_demo_onlyT, get_psi_make_TOD_T, unique_theta_detect
 export FFTConvolution_QU, FFTConvolution_T, get_psi_make_TOD_TQU_HWP, solver_matrix_TQU
-export get_pointings_theta_phi_psi_alpha_pix_tod, tod_convolution_idalhwp, tod_convolution_like_mc,tod_convolution_like_mc. R_complex, complex_Muller, make_order_alm_3,make_order_alm_4
+export get_pointings_theta_phi_psi_alpha_pix_tod, tod_convolution_idalhwp, tod_convolution_like_mc,tod_convolution_like_mc2, R_complex, complex_Muller, make_order_alm_3,make_order_alm_4
 export ConvolutionParams, gen_ConvolutionParams
 using Statistics
 
