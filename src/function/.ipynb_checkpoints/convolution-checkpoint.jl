@@ -196,7 +196,7 @@ function tod_convolution_like_mc_new(cp, theta_tod, phi_tod, psi_tod, alpha, M_r
             B3 = W[:,-mmax+l+1:mmax+l+1]*((C[1,3].*blm_full[1,mmax+1,-l+cp.lmax+1+2:mmax+cp.lmax+1+2].*e2ia .*sqrt2 .+ C[2,3].*blm_full[2,l+1,-mmax+cp.lmax+1:mmax+cp.lmax+1].*e4ia .+ C[3,3].*blm_full[3,l+1,-mmax+cp.lmax+1+4:mmax+cp.lmax+1+4]).*ψ_temp)
             SB3 = S3.*conj.(B3)
             #SB2=0
-            temp = real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB0)) .+ real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB2))/2. + real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB3))/2.
+            temp = real(sum(exp.(1im*ell_v[cp.lmax+1-l:cp.lmax+1+l]*theta_tod[i]).*　SB0)) .+ real(sum(exp.(1im*ell_v[cp.lmax+1-l:cp.lmax+1+l]*theta_tod[i]).*　SB2))/2. + real(sum(exp.(1im*ell_v[cp.lmax+1-l:cp.lmax+1+l]*theta_tod[i]).*　SB3))/2.
             tod[i] += @views temp
         end
     end
