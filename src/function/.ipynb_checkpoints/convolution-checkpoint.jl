@@ -182,8 +182,8 @@ function tod_convolution_like_mc_new(cp, theta_tod, phi_tod, psi_tod, alpha, M_r
             e4ia = exp(4 * 1im * alpha[i])
             e4iac = exp(-4 * 1im * alpha[i])
             #M_rotate = Rotate_HWP[i]*M_c*conj.(Rotate_HWP[i])
-            ψ2 = 2.0.*psi_tod[i]
-            φ_temp = exp.(-1im*ell_v*pi./2).*exp.(1im*ell_v*phi_tod[i])
+            #ψ2 = 2.0.*psi_tod[i]
+            @views φ_temp = exp.(-1im*ell_v[cp.lmax+1-l:cp.lmax+1+l]*pi./2).*exp.(1im*ell_v[cp.lmax+1-l:cp.lmax+1+l]*phi_tod[i])
             ψ_temp = exp.(-1im*ell_v[cp.lmax+1-mmax:cp.lmax+1+mmax]*psi_tod[i]) .* exp.(-1im*ell_v[cp.lmax+1-mmax:cp.lmax+1+mmax]*pi./2)
             S0 = W*(alm_full[1,l+1,-l+cp.lmax+1:l+cp.lmax+1].*φ_temp)
             B0 = W[:,-mmax+l+1:mmax+l+1]*((C[1,1].*blm_full[1,l+1,-mmax+cp.lmax+1+4:mmax+cp.lmax+1+4] .+ C[2,1].*blm_full[3,l+1,-mmax+cp.lmax+1+6:mmax+cp.lmax+1+6]/sqrt2*e2ia .+ C[3,1].*blm_full[2,l+1,-mmax+cp.lmax+1+2:mmax+cp.lmax+1+2]/sqrt2*e2iac).*ψ_temp)
