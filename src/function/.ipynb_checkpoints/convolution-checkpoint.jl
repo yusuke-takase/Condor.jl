@@ -164,6 +164,7 @@ function tod_convolution_like_mc_new(cp, theta_tod, phi_tod, psi_tod, alpha, M_r
     alm_full = make_order_alm_3_2(cp.alm, cp.lmax)
     blm_full = make_order_alm_4(cp.blm, cp.lmax)
     sqrt2=sqrt(2)
+    ell_v = Vector(-cp.lmax:1:cp.lmax)
     for l in cp.l_range[1]:cp.l_range[2]
         #@show l
         if beam_mmax > l
@@ -172,7 +173,7 @@ function tod_convolution_like_mc_new(cp, theta_tod, phi_tod, psi_tod, alpha, M_r
             @views mmax = beam_mmax
         end
         W = WignerD.wignerd(l,pi/2)
-        ell_v = Vector(-l:1:l)
+        #ell_v = Vector(-l:1:l)
         φ_temp = exp.(-1im*ell_v*(pi./2))
         ψ_temp = exp.(-1im*ell_v*(pi./2))
         for i in 1:length(theta_tod[:])
