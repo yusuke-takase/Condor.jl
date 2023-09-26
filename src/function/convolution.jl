@@ -46,7 +46,7 @@ function tod_convolution_like_bc_new(cp, theta_tod, phi_tod, psi_tod, alpha, M_r
     blm_full = make_order_alm_4(cp.blm, cp.lmax)
     lmax = cp.lmax
     sqrt2=sqrt(2)
-    blm_sos0 = zeros(ComplexF64,  lmax+1, 2lmax+1 + 8)
+    blm_s0s0 = zeros(ComplexF64,  lmax+1, 2lmax+1 + 8)
     blm_s0s2 = zeros(ComplexF64,  lmax+1, 2lmax+1 + 8)
     blm_s0sm2 = zeros(ComplexF64,  lmax+1, 2lmax+1 + 8)
     blm_s2s0 = zeros(ComplexF64,  lmax+1, 2lmax+1 + 8)
