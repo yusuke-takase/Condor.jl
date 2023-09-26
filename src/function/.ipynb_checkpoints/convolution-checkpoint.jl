@@ -70,20 +70,20 @@ function tod_convolution_like_bc_new(cp, theta_tod, phi_tod, psi_tod, alpha, M_r
             ## m < 0
             blm_s0s0[l+1,1:lmax+4] = blm_full[1,l+1,1:lmax+4]
             blm_s0s0[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[1,l+1,lmax+4+1:2lmax+1 + 8]
-            blm_s0s2[l+1,1:lmax+4] = blm_full[2,l+1,1:lmax+4].*e2ia
-            blm_s0s2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[2,l+1,lmax+4+1:2lmax+1 + 8].*e2iac
-            blm_s0sm2[l+1,1:lmax+4] = blm_full[3,l+1,1:lmax+4].*e2iac
-            blm_s0sm2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[3,l+1,lmax+4+1:2lmax+1 + 8].*e2ia
-            blm_s2s0[l+1,1:lmax+4] = blm_full[1,l+1,1:lmax+4].*e2ia
-            blm_s2s0[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[1,l+1,lmax+4+1:2lmax+1 + 8].*e2iac
+            blm_s0s2[l+1,1:lmax+4] = blm_full[2,l+1,1:lmax+4-2].*e2ia
+            blm_s0s2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[2,l+1,lmax+4-2+1:2lmax+1 + 8].*e2iac
+            blm_s0sm2[l+1,1:lmax+4] = blm_full[3,l+1,1:lmax+4+2].*e2iac
+            blm_s0sm2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[3,l+1,lmax+4+2+1:2lmax+1 + 8].*e2ia
+            blm_s2s0[l+1,1:lmax+4] = blm_full[1,l+1,1:lmax+4+2].*e2ia
+            blm_s2s0[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[1,l+1,lmax+4+2+1:2lmax+1 + 8].*e2iac
             blm_s2s2[l+1,1:lmax+4] = blm_full[2,l+1,1:lmax+4]
             blm_s2s2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[2,l+1,lmax+4+1:2lmax+1 + 8]
-            blm_s2sm2[l+1,1:lmax+4] = blm_full[3,l+1,1:lmax+4].*e4ia
-            blm_s2sm2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[3,l+1,lmax+4+1:2lmax+1 + 8].*e4iac
-            blm_sm2s0[l+1,1:lmax+4] = blm_full[1,l+1,1:lmax+4]*e2iac
-            blm_sm2s0[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[1,l+1,lmax+4+1:2lmax+1 + 8]*e2ia
-            blm_sm2s2[l+1,1:lmax+4] = blm_full[2,l+1,1:lmax+4].*e4iac
-            blm_sm2s2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[2,l+1,lmax+4+1:2lmax+1 + 8].*e4ia
+            blm_s2sm2[l+1,1:lmax+4] = blm_full[3,l+1,1:lmax+4+4].*e4ia
+            blm_s2sm2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[3,l+1,lmax+4+4+1:2lmax+1 + 8].*e4iac
+            blm_sm2s0[l+1,1:lmax+4] = blm_full[1,l+1,1:lmax+4-2]*e2iac
+            blm_sm2s0[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[1,l+1,lmax+4-2+1:2lmax+1 + 8]*e2ia
+            blm_sm2s2[l+1,1:lmax+4] = blm_full[2,l+1,1:lmax+4-4].*e4iac
+            blm_sm2s2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[2,l+1,lmax+4-4+1:2lmax+1 + 8].*e4ia
             blm_sm2sm2[l+1,1:lmax+4] = blm_full[3,l+1,1:lmax+4]
             blm_sm2sm2[l+1,lmax+4+1:2lmax+1 + 8] = blm_full[3,l+1,lmax+4+1:2lmax+1 + 8]
             
