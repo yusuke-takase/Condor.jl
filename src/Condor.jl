@@ -12,7 +12,7 @@ using HDF5
 using Falcons
 using WignerD
 using FFTW
-using NPZ
+#using NPZ
 
 #=
 function __init__()
