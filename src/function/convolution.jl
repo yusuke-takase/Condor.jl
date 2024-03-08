@@ -1,3 +1,45 @@
+function tod_convolution(cp, theta_tod, phi_tod, psi_tod, alpha, M_r)
+    #M_c = complex_Muller(M_r)
+    C = complex_Muller(M_r)
+    #Rotate_HWP = R_complex.(alpha)
+    tod = zeros(Float64, length(theta_tod[:]))
+    alm_full = make_order_alm_3_2(cp.alm, cp.lmax)
+    blm_full = make_order_alm_4(cp.blm, cp.lmax)
+    sqrt2=sqrt(2)
+    for l in cp.l_range[1]:cp.l_range[2]
+        #@show l
+        W = WignerD.wignerd(l,pi/2)
+        ell_v = Vector(-l:1:l)
+        φ_temp = exp.(-1im*ell_v*(pi./2))
+        ψ_temp = exp.(-1im*ell_v*(pi./2))
+        for i in 1:length(theta_tod[:])
+            e2ia = exp(2 * 1im * alpha[i])
+            e2iac = exp(-2 * 1im * alpha[i])
+            e4ia = exp(4 * 1im * alpha[i])
+            e4iac = exp(-4 * 1im * alpha[i])
+            #M_rotate = Rotate_HWP[i]*M_c*conj.(Rotate_HWP[i])
+            ψ2 = 2.0.*psi_tod[i]
+            φ_temp = exp.(-1im*ell_v*pi./2).*exp.(1im*ell_v*phi_tod[i])
+            ψ_temp = exp.(-1im*ell_v*psi_tod[i]) .* exp.(-1im*ell_v*pi./2)
+            S0 = W*(alm_full[1,l+1,-l+cp.lmax+1:l+cp.lmax+1].*φ_temp)
+            B0 = W*((C[1,1].*blm_full[1,l+1,-l+cp.lmax+1+4:l+cp.lmax+1+4] .+ C[2,1].*blm_full[3,l+1,-l+cp.lmax+1+6:l+cp.lmax+1+6]/sqrt2*e2ia .+ C[3,1].*blm_full[2,l+1,-l+cp.lmax+1+2:l+cp.lmax+1+2]/sqrt2*e2iac).*ψ_temp)
+            SB0 = S0.*conj.(B0)
+            #SB0 = 0
+            S2 =  W*(alm_full[2,l+1,-l+cp.lmax+1:l+cp.lmax+1].*φ_temp) #exp(pi*im)
+            B2 = W*((C[1,2].*blm_full[1,l+1,-l+cp.lmax+1+6:l+cp.lmax+1+6].*e2iac .*sqrt2 .+ C[2,2].*blm_full[2,l+1,-l+cp.lmax+1+4:l+cp.lmax+1+4] .+ C[3,2].*blm_full[3,l+1,-l+cp.lmax+1+8:l+cp.lmax+1+8].*e4iac).*ψ_temp)
+            SB2 = S2.*conj.(B2)
+            S3 =  W*(alm_full[3,l+1,-l+cp.lmax+1:l+cp.lmax+1].*φ_temp) #exp(pi*im)
+            B3 = W*((C[1,3].*blm_full[1,l+1,-l+cp.lmax+1+2:l+cp.lmax+1+2].*e2ia .*sqrt2 .+ C[2,3].*blm_full[2,l+1,-l+cp.lmax+1:l+cp.lmax+1].*e4ia .+ C[3,3].*blm_full[3,l+1,-l+cp.lmax+1+4:l+cp.lmax+1+4]).*ψ_temp)
+            SB3 = S3.*conj.(B3)
+            #SB2=0
+            temp = real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB0)) .+ real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB2))/2. + real(sum(exp.(1im*ell_v*theta_tod[i]).*　SB3))/2.
+            tod[i] += @views temp
+        end
+    end
+    return tod
+end
+
+
 function tod_convolution_idalhwp(cp, theta_tod, phi_tod, psi_tod, alpha)
     tod = zeros(Float64, length(theta_tod[:]))
     for l in cp.l_range[1]:cp.l_range[2]
